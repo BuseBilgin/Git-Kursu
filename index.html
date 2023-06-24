@@ -28,3 +28,357 @@ Burada varsayılan Branch ismini istediğiniz gibi seçebilir veya git'in önerd
 
 Bu kurulum adımı, PATH ortamını değiştirmenize izin verir. PATH, komut satırından bir komut çalıştırdığınızda dahil edilen varsayılan dizin kümesidir. Bunu ortadaki (önerilen) seçimde bırakın ve Next'e tıklayın.
 
+
+Linux Git Kurulumu
+Terminal kullanarak Git indirme
+
+
+Terminali açın
+$ sudo apt-get update
+
+$ sudo apt-get install git 
+
+Kodlarını çalıştırın
+
+	
+MacOS Git Kurulumu
+Terminali açın ve yandaki kod ile güncelleyin
+$ sudo port selfupdate 
+
+Yandaki kodlar en güncel git sürümünü arayın ve indirin
+$ port search git
+
+$ port variants git 
+
+Git Nedir, Neden Git Kullanmalıyız?
+
+Git nedir, Ne işe yarar?
+Git , versiyon kontrol sistemi olarak adlandırılan bir sistemdir. Çoğunlukla yazılım geliştirme projelerinde kullanılan bir açık kaynaklı proje yönetim sistemidir. Git, projelerde yapılan değişiklikleri takip etmek, farklı sürümler arasında geçiş yapmak ve kodları diğer geliştiricilerle paylaşmak gibi işlemleri kolaylaştırır.
+
+Versiyon kontrol istemi, hata yapıldığında projeyi önceki sürüme geri döndürmeye, zaman içinde yapılan değişiklikleri gözden geçirmeye, soruna neden olabilecek bir şeyi en son kimin değiştirdiği gibi bilgileri takip etmeye yarar. Git, ters giden bir şeyler olduğunda sorunsuz sürüme dönüş yapmayı mümkün kılar. 
+
+Versiyon Kontrol Sistemlerinin Çalışma Mantığı
+
+Git'in tüm işlemlerinde ana mantık yukarıdaki resimde olduğu gibidir. Üç kısım arasındaki veri alış-verişleri sonucu proje tamamlanır. Bu kısım hakkındaki bilgiler diğer sayfalarda verilecektir. Kısacası yukarıdaki resim, kursun özetidir diyebiliriz.
+
+Git Sistemine Genel Bakış
+Git şeması ve Temel Kavramlar
+
+
+Git şemasını açıklayan bu örnek üzerinden tüm sistemi anlayabiliriz. Görsele baktığımızda işlemlerin dallara ayrıldığını ve işlemlerin birbirini takip ettiğini görebiliyoruz. 
+
+
+1-)  İşlemin en başındaki yuvarlak head kısmını temsil eder. Adından anlaşılacağı gibi sistemin başı olan bu kısım projenin gerçekleştiği ilk aşamadır. Ardından bir sonraki işlem ile projeye devam edilir
+
+
+
+2-)  şemanın devamında bir yol ayrımı görülür. Bu kısma ise dal manasına gelen branch denir. Branch oluşturmadaki temel amaç, projeye iki farklı koldan giderek devam etmek ve isteğe göre bunları birleştirmektir.
+
+
+3-)  Şemanın devamında projenin tekrardan kollara ayrıldığı görülmektedir. Bunların birleşme (merge) ve ayrışma işlemlerini komutla gerçekleştirmek mümkündür. Kursun devamında buna değinilecektir.
+
+
+Git sistemindeki veri alışverişi  yandaki şekiller arasında olur. Özelliklerini tanımlayacak olursak:
+
+Working directory: Bu kısım kodların yazıldığı mevcut çalışma alanıdır
+
+Staging area:  Şekilde görüldüğü üzere ortada kalan bu kısım, aktarılma aşamasında olan dosyanın nereye gideceğine karar verilen kısımdır. 
+
+Repository: Bu kısım, dosyaların saklandığı final kısmıdır. Eklenen değişiklikler projeye bu aşamada tamamen aktarılır.
+
+Bu bölümlerin işlevlerine ileride detaylı olarak değineceğiz.
+
+Komutlara Giriş: Dosya İşlemleri
+Git'in kullanımı için terminal veya komut satırı üzerinden çeşitli komutlar kullanılır. Bu komutlar sayesinde dosyaların takibi yapılabilir, değişiklikler kaydedilebilir ve projenin farklı versiyonları arasında geçiş yapılabilir. Git'i kullanmak istiyorsanız, ilk olarak terminal veya komut satırına giriş yaparak Git komutlarına hakim olmanız gerekmektedir. Bu bölümde komut satırlarına giriş yapacağız.
+
+1) pwd Komutu
+
+
+pwd  
+
+(present working directory) komutu, kullanıcının bulunduğu anlık dizin yolu bilgisini terminale yazdıran bir komuttur. Yani hangi dizinde olduğunuzu gösteren bir komuttur. Komutu çalıştırdığınızda, terminalde şu an nerede olduğunuzu görebilirsiniz.
+
+2) ls Komutu
+
+
+ls
+
+Bu komut, bulunduğunuz dizindeki dosya ve klasörleri listeler ve bunların isimlerini terminale yazar. "ls" komutu, seçenekler ve argümanlarla birlikte kullanılabilir ve bu şekilde farklı çıktılar üretebilir. Örneğin, "-l" seçeneği kullanıldığında dosya ve klasörlerin ayrıntılı listesi görüntülenir.
+
+Elbette bu dosyaları listelemek istememizin bir nedeni var. Bu dosyalar arasında gezinerek hedef dosyaya geçiş yapmamız gerekiyor. Bu düşünceyle kursa devam edebiliriz.
+
+3) clear Komutu
+
+
+clear
+
+Dosyalar arasında geçiş yapmadan önce terminal ortamını temizlemek gerekebilir. Bu komut, kullanıcının önceki komutları ve çıktıları temizlemesine izin verir ve ekranda daha net bir görünüm sağlar. Örneğin, "clear" komutunu kullanarak bir önceki konsol oturumunuzun çıktılarını ve komut geçmişini temizleyebilirsiniz. 
+
+4) cd Komutu
+
+
+cd
+
+
+"cd" komutu, "change directory" yani "dizin değiştir" anlamına gelir. Bu komut, kullanıcının bulunduğu dizini değiştirmesine izin verir. Komutun kullanımı şu şekildedir: 
+
+Örneğin, "cd /home/kullanici/adresler" komutu, kullanıcının "/home/kullanici/adresler" dizinine gitmesini sağlar.
+
+
+5) mkdir Komutu
+
+
+mkdir
+
+
+"mkdir" komutu, "make directory" kelimelerinin kısaltmasıdır ve yeni bir dizin (klasör) oluşturmak için kullanılır. Bu komutu kullanarak, mevcut dizinde veya başka bir dizinde yeni bir alt dizin oluşturabilirsiniz. Komutun kullanımı şu şekildedir:
+
+mkdir [dizin_adı]
+
+Burada [dizin_adı], oluşturulacak yeni dizinin adını belirtir. Örneğin, "mkdir yeni_dizin" komutu, "yeni_dizin" adlı yeni bir dizin oluşturur.
+
+
+
+6) touch Komutu
+
+
+touch
+
+
+Bu komut belirtilen dosyaların var olmasını sağlar veya varolan dosyaların değiştirilme tarihini günceller.
+
+Eğer touch komutuna varolmayan bir dosya adı verilirse, o isimde bir dosya oluşturulur. Eğer varolan bir dosya adı verilirse, o dosyanın son erişim ve değiştirilme tarihi güncellenir. Ayrıca, touch komutu ile dosya içeriği değiştirilmez, sadece dosyanın meta verileri değişir.
+
+Kısaca özetlemek gerekirse, touch komutu dosya oluşturmak veya dosyanın son değiştirildiği zamanı güncellemek için kullanılır.
+
+
+
+
+Böylelikle dosya işlemlerini bitirmiş olduk. Bu komutlar git ile doğrudan bağlantılı olmasa da dosyalar arasında geçiş yapmak projeyi yönetmek açısından olmazsa olmazdır. Temel dosya komutlarını öğrendiğimize göre git komutlarına geçiş yapabiliriz.
+	
+Git Komutlarına Giriş : Git init ve Git status
+Artık Git' in kendi komutları üzerinden işlem yapabilecek seviyeye geldik. Bu kısım ve bundan sonraki bölümlerde Git komut ekranı üzerinden oluşturduğumuz proje üzerinden işlemler gerçekleştireceğiz. Başlatma, ekleme, birleştirme ve geri dönüş işlemleri dahil olmak üzere pek çok komut satırıyla ilgileneceğiz.
+
+Git init ve Git status 
+
+Repo ile ilgili işlemlerde sıklıkla bu iki komutu kullanacağız. Git init ve git status komutları birbiriyle ilintili olduğundan dolayı ikisini birlikte ele alacağız.
+
+Git init: git init komutu, bir dizinde yeni bir Git deposu (repository) oluşturmak için kullanılır. Bu komutu çalıştırdığınız klasör artık bir git deposu olarak ayarlanır ve bu depoda bulunan dosyaların sürüm kontrolü yapılabilir hale gelir. 
+
+Git status: git status  komutu, çalışılan Git deposundaki dosyaların durumunu görüntülemek için kullanılır. Bu komutla, hangi dosyaların takip edildiği, hangilerinin eklenmediği, hangilerinin değiştirildiği ve hangilerinin silindiği gibi bilgiler elde edilebilir. Aynı zamanda, git status komutu ile bir sonraki adımda hangi komutların kullanılabileceği hakkında da ipuçları alınabilir. Bu komut, Git deposunda yapılan değişikliklerin durumunu kontrol etmek için sıkça kullanılır.  
+
+
+yukarıdaki örneğe bakıldığında git status komutuyla kontrol etmek için öncelikle git init komutu çalıştırılmalıdır. git init komutu için ise önceki bölümde öğrenmiş olduğumu cd komutu işe yaramaktadır. 
+
+Özeytleyecek olursak öncelikle giti başlatmak için bir klasör seçilmelidir. Hangi dizinde oluşturulmak isteniyorsa o dizine girilmelidir. Daha sonra git init  ile git başlatılır. ardından git status ile dosyalar kontrol edilir. Dosyaları, oluşturduğumuz git sistemine nasıl aktaracağımızı sonraki aşamalarda öğreneceğiz.
+
+Git Add ve Commit İşlemi
+Git init ile mevcut dizinde git başlatma işlemini öğrenmiştik. Şimdi ise git add ve git commit komularıyla istediğimiz dosyaları repoya eklemeyi öğreneceğiz. Önce git add ve git commit komutlarının işlevini inceleyecek, daha sonra bunları önceki bilgilerden hareketle bir örnekle pekiştireceğiz. 
+
+
+Yandaki şekli daha önce "Git Sistemine Genel Bakış"  sayfasında görmüştük
+git add komutu, git init ile başlattığımız git sistemine dosya eklememizi sağlar. git add komutu ise söz konusu içeriği, çalıştığımız dizinden bekleme kısmı olarak tabir edebileceğimiz bölüme aktarmaya yarar.
+
+örnek kullanım : git add ornek_dosya
+
+Bu kullanımla birlikte ornek_dosya isimli dosyamızı staging area kısmına aktarmış olduk. Bu dosyayı dilersek repostiyory kısmına aktarabiliriz. Bu işlem için de git commit komutuna ihtiyaç duyarız. Yine isteğe bağlı olarak commit işlemine mesaj eklenebilir. Eklenen mesaj sayesinde yapılan değişikliğin neleri içerdiği diğer ekip üyeleri tarafından görülebilir.
+
+örnek kullanım : git commit -m "sifre.txt dosyasina yeni sifreler eklendi"
+
+Öğrendiklerimizden Hareketle Add ve Commit İşlemlerini Gerçekleştirelim :
+
+İlk olarak hangi dizinde olduğumuzu anlamalıyız.
+
+
+Hedef klasöre giriş yapıyoruz
+
+
+Git işlemini başlatıyoruz. Git sistemini Yeni klasör içerisinde kurduk. 
+
+
+Artık Yeni klasör içerisinde istediğimiz dosyaları staging area bölümüne aktarabiliriz. 
+
+git add . ile hedef klasördeki tüm dosyaları staging areaya gönderdik.
+
+
+Son olarak tüm dosyaları staging areadan repository kısmına taşıyacağız. Bunu yaparken git commit komutunu kullandık. "Dosyalar eklendi" bilgisiyle commite ait bir mesaj bıraktık  
+
+Git Log ve Gitignore
+Git add ve git commit işlemlerini önceki bölümde öğrenmiştik. Bu bölümde ise genel olarak commit işleminden sonraki süreçleri takip edeceğiz.
+
+Gitlog Nedir , Gitlog Nasıl Kullanılır?
+
+Bir veya birden fazla kez commit işlemi yaptığımızı farz ediyoruz. Bunların bilgilerine erişmek için git log komutunu kullanmamız gerekiyor. Komutu çalıştırmadan önce git logun ne olduğuna bir göz atalım: 
+
+
+git log komutu, bir Git deposundaki commit geçmişini görüntülemek için kullanılır. Bu komut, en son yapılan commit'ten başlayarak tüm commitleri listeler ve her bir commit'in SHA-1 karma değeri, yazarı, tarihi ve mesajını gösterir. Ayrıca, belirli bir düzenleme ya da sorgulama yapmak için farklı seçeneklerle de kullanılabilir.
+
+Bazı sık kullanılan parametreler şunlardır:
+
+--oneline: Her bir commit'i tek bir satırda özetler.
+
+--graph: Commit geçmişini grafiksel olarak gösterir.
+
+--author: Sadece belirli bir yazarın commit'lerini listeler.
+
+--since veya --until: Belirli bir tarih aralığındaki commit'leri listeler.
+
+Örneğin, git log --oneline komutu, tüm commit'leri tek bir satırda özetleyecektir.
+
+
+
+Commit işleminden sonra her commite bir adres atanır. Bu adreslerin nasıl kullanılacağı konusunda daha sonra bilgi sahibi olacağız
+
+Gitignore : Bazı Dosyaların Görünmesini Engelleyebilirsiniz
+
+Gitignore dosyası, Git'in belirli dosyaları veya dizinleri takip etmemesini sağlayan bir dosyadır. Bu, proje klasörünüzdeki özel veya hassas dosyaların yanı sıra gereksiz veya geçici dosyaların yüklenmesini ve paylaşılmasını engellemek için kullanılabilir.
+
+Bir gitignore dosyası oluşturmak için, proje kök dizininize .gitignore adında bir dosya eklemeniz gerekir. Bu dosya, takip edilmemesi gereken dosya ve dizinlerin listesini içerecektir. Dosya isimleri, dosya uzantıları ve dizin adları gibi şablonlar kullanarak belirli dosyaları veya türleri hariç tutabilirsiniz.
+
+Örneğin, bir Node.js projesinde "node_modules" klasörü genellikle gereksizdir ve depolama alanı kaplayabilir, bu nedenle .gitignore dosyasına "node_modules/" ekleyerek bu klasörün Git tarafından takip edilmemesini sağlayabilirsiniz.
+
+.gitignore dosyasının içeriği aşağıdaki gibi görünebilir:
+
+# .log uzantısına sahip dosyaların görünmesini engellemek için kullanabilirsiniz
+
+*.log
+
+
+
+# "temp" isimli dizinin içindeki her şeyi gizler
+
+temp/
+
+
+
+# yalnızca "config.json" ismindeki dosyayı gizler
+
+config.json
+
+Yukarıda görüldüğü gibi dosyaları gizlemenin farklı yolları var. Bu dosyaların görünmesini engellemek için .gitignore dosyasına başvurduk. Ancak yukarıdaki kısım tam anlaşılmamış olabilir. Bu yüzden öğrendiklerimizi terminalde uygulayarak daha iyi anlayabiliriz.
+
+İster terminalden touch .gitignore  komutuyla ister klasörün içinde yeni dosya oluşturarak gitignore dosyasını oluşturabiliriz. 
+
+Buradaki hedefimiz .idea dosyasının projemizde görünmemesini sağlamak.
+
+
+git init ile önceden projeye git sistemini entegre etmiştik. Şimdi git status komutunu kullandığımızda oluşturduğumuz .gitignore dosyasının gite eklenmediğini görüyoruz. bunu git status ile anlıyoruz. 
+
+
+git add .gitignore komutuyla ignore dosyamızı gite ekliyoruz. Böylelikle ignore dosyamızda yaptığımız değişiklikleri versiyon kontrolüne tâbi tutmamız artık mümkün.
+
+
+.gitignore dosyamıza görünmesini istemediğimiz dosyaların listesini ekliyoruz. Bunları herhangi bir kod editörü aracılığıyla ekleyebiliriz. Yazdıklarımızı kaydediyoruz. Gitignore dosyalarına eklenmesi gereken içeriklerin neler olması gerektiğine dair bazı sitelerde bilgiler mevcut. Örneğin c dilinde bir proje dilinde geliştirdiyseniz ve gitignore dosyanızda nelerin yer alacağını bilmiyorsanız
+
+c gitignore file template olarak aratabilir, örnek şablon dosyasını projenize ekleyebilirsiniz.
+
+
+git status komutunu kullandığınızda .gitignore dosyasına yazıp kaydettiğiniz içeriklerin otomatik kaydedildiğini göreceksiniz. Böylelikle projenizde hangi dosyaların görünmesini istemediğinizi belirtmiş olacaksınız.
+
+GİT BRANCH
+
+
+
+NEDİR BU BRANCHLER VE NE İŞE YARARLAR?
+
+Git, dağıtık bir versiyon kontrol sistemi olarak kullanılır. Git branch(dal) projenizin farklı versiyonlarını kullanmanızı sağlayan bir kavramdır. Branch oluşturmaktaki esas amacımız projemize farklı kollardan giderek devam etmek ve isteğe bağlı şekilde bunları birleştirmektir.
+
+
+Git branchler, aşağıdaki çeşitli senaryolarda kullanılabilir:
+
+Yeni özellik eklemek
+
+Hataları düzeltmek
+
+Farklı denemeler yapmak 
+
+Her dal, ana(master) dalından ayrı olarak takip edilen bir geliştirme yolunu temsil eder. Kısacası, git branch, projenizde farklı yönlerde çalışmanıza olanak tanıyan ve kod tabanını izole edebileceğiniz bir yapıdır. Bu sayede bir dalda yapılan değişiklikler, ana dalı etkilemeden geliştirilebilir ve yönetilebilir.
+
+Git branch ile birlikte aşina olmamız, bilmemiz gereken farklı kavramlarda mevcuttur. Bu kavramlardan kısaca bahsedelim.
+
+HEAD NEDİR?
+
+Çalışma alanınızdaki mevcut konumu temsil eden bir işaretçidir. HEAD, en son yapılan işlemi veya son commiti gösterir.
+
+MERGE NEDİR?
+
+Merge işlemi, farklı geliştiricilerin aynı projede ayrı ayrı çalıştığı durumlarda veya yeni özelliklerin ana dal ile birleştirilmesi gerektiğinde sıklıkla kullanılır. Bu şekilde, projedeki farklı geliştirme dalları birleştirilerek tek bir ortak kod tabanı elde edilir. 
+
+Merge işlemini pratikte komutlarla daha iyi anlamak için algoritmik bir haritayla açıklayalım:
+
+
+git branch < dal-adı > komutu
+Git'te yeni bir dal (branch) oluşturmak için kullanılan bir komuttur. 
+
+Yeni bir dal oluşturmak için 'git branch' komutunu kullanırken, oluşturmak istediğiniz dalın adını komutun sonuna eklemeniz gerekmektedir. 
+
+Örneğin, git branch feat komutunu çalıştırarak "feat" adında bir dal oluşturabilirsiniz.
+
+Bununla birlikte, oluşturduğunuz yeni dal, mevcut konumda (HEAD) kalır.
+
+
+git commit komutu
+Üstteki şeklimizde gördüğümüz üzere ' feat' adında yeni bir branch oluşturduk. Fakat yukarıda branchte hiçbir işlem gerçekleştirmedik.
+
+git commit komutunu kullanarak, Git deposunda yapmış olduğunuz değişiklikleri kalıcı olarak kaydedebiliriz. Yani Oluşturduğunuz yeni dalda gerçekleştirdiğiniz değişiklikleri commit olarak kaydetmek için bu komutu kullanabilirsiniz. 
+
+
+ Yandaki şekilde de takibini sağladığımız gibi isteğimize bağlı  git commit komutunu kullanarak bir commit daha atabiliriz.
+
+
+git switch < dal-adı >
+ git switch komutu, Git deposundaki çalışma alanınızı  belirtilen dala değiştirmek için kullanılan bir komuttur.
+
+Kaba şekilde bahsedersek yandaki şekilde de gösterildiği gibi git switch master komutuyla master dalında çalışma yapabiliriz.
+
+
+ Sonrasında masterda , git commit komutuyla işlemler gerçekleştirebilir, örnek haritamızda yandaki şekildeki gibi bir görüntü ile bağdaştırabiliriz.
+
+
+git merge < kaynak-dal >
+git merge komutu, Git'te iki farklı dalı birleştirmek için kullanılan bir komuttur. Bu komut, değişiklikleri kaynak dalı hedef dala uygulayarak dalları birleştirir. 
+
+Örneğin, yandaki görselimizde şematize edildiği gibi            git merge feat komutunu kullanarak 'feat' dalını 'master' dalına birleştirebiliriz.
+
+FAST FORWARD NEDİR?
+
+
+Örneğin 'feat' adında bir branch açalım ve üzerinde işlemler gerçekleştirelim. 'master' dalında hiçbir şey gerçekleştirmemiş olalım ve sonrasında bu brancleri birleştirelim (merge). Bu işleme FAST FORWARD adı verilir.
+
+İşlemler aslında tek dal üzerinden de yürütülebilir görünüyor. Neden fast forwarda ihtiyaç duyulur?
+
+Birden fazla kişi çalışıyor olabilir.
+
+Deneme yapmak için ayrı branch açıp eski kodları bozmamak için bu işlem gerçekleştirilebilir.
+
+Peki her iki branchte yapılan işler birleştirme esnasında çakışırsa (conflict) ne olur?  Buna 'Merge Conflict'  (Birleştirme çakışması) adı verilir.
+
+MERGE CONFLİCT
+
+Git'te iki veya daha fazla dalın birleştirilirken aynı dosyadaki farklı değişikliklerin çakışması durumunda ortaya çıkar. Bu çakışma, otomatik olarak çözülemeyen ve manuel müdahale gerektiren durumdur.
+
+Merge conflict'i çözmek için genel adımlar:  
+
+Merge conflict durumunu tespit edin:  git status komutunu kullanarak merge conflict durumunda olan dosyaları belirleyebilirsiniz. Bu dosyalar genellikle çakışma göstergeleriyle (<<<<<<<, =======, >>>>>>>) işaretlenir.
+
+Çakışan dosyaları düzenleyin
+
+Düzenlenen dosyaları kaydedin: Dosyaları düzenledikten sonra, değişiklikleri kaydedin (commit). Çakışma çözüldüğünde, düzenlenen dosyaları kaydetmek ve birleştirme işlemini tamamlamak için git add ve git commit komutlarını kullanın.
+
+Birleştirme işlemini tamamlayın: Çakışma çözüldükten ve dosyalar kaydedildikten sonra, birleştirme işlemini tamamlayın.
+
+STASH
+
+git stash komutunu kullanmanın temel amacı, üzerinde çalıştığınız bir dalda hızlıca başka bir işe geçmek veya başka bir dalda çalışmak istediğinizde, mevcut değişiklikleri kaydetmek ve başka bir konuma geçmek için bir araç sağlamaktır. Stash, çalıştığınız değişiklikleri geçici olarak depolar ve bir sonraki zamanda onları geri almanızı sağlar. 
+
+
+git stash list: Stash'te kaydedilen değişiklikleri listelemek için bu komutu kullanabilirsiniz. Bu komut, stash listesini gösterir ve her bir stash için bir benzersiz kimlik (ID) sağlar.
+
+git stash apply: Stash'te saklanan değişiklikleri geri almak için bu komutu kullanabilirsiniz. ( stashi stash listesinden kaldırmaz)
+
+
+POP
+
+git stash pop komutu, en son kaydedilen stash'i geri alır ve stash listesinden kaldırır. Bu komutu kullanarak stash'i geri alırken, stash'in otomatik olarak stash listesinden kaldırılmasını sağlamış olursunuz. 
+
+  
