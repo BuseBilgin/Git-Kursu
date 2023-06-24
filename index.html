@@ -1,7 +1,26 @@
+
+
+
+Başlangıç Seviyesi Git Kursu
+
+
+Git kurulumu
+Bu bölüm, git ortamının kurulum aşamalarını içermektedir.
+
+
+Git temelleri
+git sistemine ait temel kavaramlar yer almaktadır
+
+
+Git işlemleri
+Bu bölümde branch, merge gibi konulara değinilmiştir.
+
+
+
+
 Windows Git Kurulumu
 Windows için git yükleyicisini indirin
 
-aaa
 Resmi git sitesinden https://git-scm.com/downloads Windows seçeniğini seçerek indiriyoruz.
 
 
@@ -382,3 +401,242 @@ POP
 git stash pop komutu, en son kaydedilen stash'i geri alır ve stash listesinden kaldırır. Bu komutu kullanarak stash'i geri alırken, stash'in otomatik olarak stash listesinden kaldırılmasını sağlamış olursunuz. 
 
   
+Git Checkout
+Git Checkout Komutu ile Neler Yapılabilir?
+Git, bir versiyon kontrol sistemi olduğu için projelerinizde geriye dönük işlemler yapmanızı kolaylaştırır. 'checkout' komutu, repository'in farklı dallarına ya da önceki işlem geçmişine gitmenizi sağlar.
+
+Önceki konulardan öğrendiğimiz gibi git, her bir commit için farklı bir kod (hash) oluşturur. Bu hash kodları, checkout komutu ile geçmişte belli bir noktaya gitmek için kullanılabilir. Örneğin, "git checkout 123abc" komutunu girerek, 123abc kodlu bir commit'e geri dönebilirsiniz.
+
+Ayrıca, checkout komutu ayrıca farklı branch'lara geçiş yapmanızı da sağlar. Yeni bir branch oluşturduktan sonra, "git checkout" komutunu kullanarak o branch'a geçebilirsiniz. Aynı şekilde, daha önce oluşturulmuş bir branch'a da geçiş yapabilirsiniz.
+
+Bir diğer kullanım alanı ise geçici değişiklikler yapmak istediğiniz zamanlardır. Örneğin, bir dosyada değişiklik yapmadan önce o dosyanın son halini görmek istiyorsanız, "git checkout" komutunu kullanarak son commit haline geri dönebilirsiniz. Bu sayede dosyalarınızda değişiklik yapmadan önce, son halini görme şansına sahip olursunuz.
+
+Birkaç örnek üzerinden 'git checkout' komutunu irdelemeye devam edelim:
+
+
+1. Örnek: En son commit haline geri dönmek için
+
+git checkout -- 
+
+Bu komut, üzerinde çalıştığınız dosyaların son halini geri getirmek için kullanılır. '--' işareti, son commit haline gitmek istediğinizi belirtir.
+
+
+2. Örnek: Başka bir branch'taki değişiklikleri almak için
+
+git checkout my-branch 
+
+Bu komut, 'my-branch' adlı başka bir branch'taki değişiklikleri almak için kullanılır. Bu komuttan sonra üzerinde çalıştığınız dosyalar, 'my-branch' branch'ındaki dosyaların en son haline göre güncellenir.
+
+
+3. Örnek: Geriye doğru belli bir commit'e gitmek için
+
+git checkout 123abc 
+
+Bu komut, '123abc' kodlu commit'e geri dönmek için kullanılır. Bu komuttan sonra üzerinde çalıştığınız dosyalar, '123abc' commit'e göre güncellenir.
+
+
+4. Örnek: Bir dosyanın en son halini geri getirmek için
+
+git checkout -- filename.txt 
+
+Bu komut, 'filename.txt' adlı dosyanın en son commit haline geri getirir. Dosya adını doğru girdiğinizden emin olun.
+
+Tüm bunların yanında yukarıda gördüğümüz kodlardan bazılarını terminal üzerinde denemek konuyu daha iyi kavratacaktır.
+
+
+Önceki konulardan hareketle branchlerin nasıl oluşturulacağına dair bilgi sahibiyiz. Birden fazla branchimiz var ve geçiş yapmak için önce branchlerimiz listelememiz gerekiyor.
+
+
+"dev" isimli branche geçiş yapmak istiyoruz. Böylelikle tüm dosyalar dev branchinin son haline göre güncellenmiş oldu
+
+
+Yine önceki bilgilerden hareketle git log komutundan faydalandığımızı varsayıyoruz. git log sayesinde commitlere hash kodu atandığını öğrenmiştik. Şimdi bunun üzerinden küçük bir işlem yapacağız.
+
+git log sayesinde atanan hash kodları aracılğıyla istediğimiz bir sürüme dönüş yapacağız. Bunun için git log listesindeki hashlerden istediğimizi kopyaladığımızı düşünüyoruz
+
+Ardından git checkout hash_id formatını kullanarak istediğimiz sürüme geçiş yapıyoruz
+
+
+
+'detached HEAD' kısmında bir uyarı dikkatimizi çekiyor. Checkout işleminden sonra head konumumuzun değiştiğini görüyoruz. Başka bir deyişle geçiş yapmış olmamız, HEAD değiştirdiğimiz anlamına geliyor.
+
+
+		
+Revert İşlemi
+Revert İşlemi
+Git revert, bir önceki "commit" işlemini geri almaya yarayan bir git komutudur. Bu sayede, son yapılan değişikliklerin tersine çevrilmesi sağlanır.
+
+Git revert komutunu kullanarak, belirli bir commit veya bir commit aralığı geri alınabilir. Komut çalıştırıldığında, seçilen commit veya commit aralığındaki değişikliklerin tersini yapacak yeni bir commit oluşturulur ve bu commit git geçmişinde görünür hale gelir.
+
+Git revert komutu, bir değişiklik tarihçesinde geri almak istediğiniz herhangi bir değişikliği geri alma imkanını sunar. Bu, yanlışlıkla yapılan veya uygunsuz bir şekilde kaydedilmiş bir değişikliği geri almanıza olanak tanır.
+
+Git revert komutunu kullanmak için şu adımları izleyebilirsiniz:
+
+1. Git çalışma dizininize gidin.
+
+2. `git log` komutunu çalıştırarak geri almak istediğiniz commit’in SHA numarasını bulun.
+
+3. `git revert <SHA>` komutunu kullanarak geri almak istediğiniz commit’i geri alın. Bu işlem bir revert commiti oluşturacaktır.
+
+4. Eğer birden fazla commit'i geri almak istiyorsanız, `git revert <start>..<end>` komutunu kullanarak start ve end olarak geri almak istediğiniz commit aralığının SHA numaralarını belirtin.
+
+Örneğin, `git revert HEAD` komutu son yapılan commit'in tüm değişikliklerini geri alacaktır. `git revert HEAD~2..HEAD` komutu ise son iki commit arasındaki değişiklikleri geri alacaktır.
+
+Geri alma işleminden sonra, değişiklikleri kontrol etmek ve doğru bir şekilde geri alınıp alınmadığını görmek için `git log` komutunu kullanabilirsiniz. Geri alma işleminden sonra, bu yeni commit'i git sunucusuna veya paylaşılan depoya yükleyebilirsiniz.
+
+Yine alıştırmalar üzerinden ilerlemeye devam edelim:
+
+
+git log komutu ile commitlerimizi kontrol ediyoruz. Buradakilerin tamamı örnektir. Commit oluşturma ve log adımlarını önceki sayfalarda öğrenmiştik.
+
+
+örnek olarak üç adet dosya oluşturalım ve içlerine rastgele metinler girelim
+
+
+commit işleminden sonra git log ile kontrol edelim
+
+
+dosya eklendi isimli commiti geri almak istiyoruz. Bunun sonucunda dosya klasörden silinsin ancak log listesinde görünmeye devam etsin istiyoruz. İlgili hash kodunu terminale yapıştırarak komutu giriyoruz
+
+
+git log komutunu çalıştırdıktan sonra son commit işleminin geri alındığı bilgisiyle karşılaşıyoruz
+
+
+Klasöre geri döndüğümüzde revert işlemini yaptığımız dosyanın silindiğini görüyoruz. Böylelikle revert işlemini bitirmiş oluyoruz.
+
+
+Hem dosyanın silinmesi hem de commit listesinden silinmesi için revert işlemi yerine reverse işlemini kullanmamız gerekiyor.
+
+
+
+Reset İşlemi
+Reset İşlemi
+Git reset komutu projedeki değişiklikleri geri almak için kullanılır. Bu komutun kullanımı oldukça esnektir ve farklı parametreler alabilir.
+
+Temel olarak, git reset komutu ile son commit işlemi geri alınarak projeniz önceki bir duruma getirilir. Bu durumda, son commit ile proje arasındaki tüm değişiklikler kaybolur.
+
+Aşağıdaki adımlarla git reset komutunu nasıl kullanabileceğinizi açıklayabilirim:
+
+ git log komutuyla geri almak istediğiniz commit'in kimliğini (hash değerini) bulun.
+
+ git reset komutunu kullanarak geri almak istediğiniz commit'e göre çalışma dizininizi güncelleyin. Örneğin, son iki commit'i geri almak için git reset HEAD~2 komutunu kullanabilirsiniz.
+
+ Geri alma işlemi tamamlandıktan sonra, dosyalarınızı tekrar düzenleyebilir, eklemeler yapabilir ve yeni bir commit oluşturabilirsiniz.
+
+git reset komutunun alabileceği parametreler şunlardır:
+
+--soft: Geri alma işlemi yapılırken Git sadece commit'i geri alır ve çalışma dizinindeki dosyalara dokunmaz. Dosyalarınızın son hali üzerinde çalışabilirsiniz ve yeni bir commit oluşturabilirsiniz.
+
+--mixed: Bu, varsayılan moddur ve git reset komutu bu parametre ile çalıştırıldığında Git, commit'i geri alır ve çalışma dizininizi günceller, ancak değişiklikleri bir sonraki commit'e hazır hale getirmez. Yani dosyalarınızın son hali üzerinde çalışabilirsiniz, ancak yeni bir commit oluşturmadan önce yeniden git add komutunu kullanarak değişikliklerinizi eklemeniz gerekiyor.
+
+--hard: Bu parametre, git reset komutunun en keskin modudur ve geri alma işlemi yapılırken tüm değişikliklerinizi siler. Böylece çalışma dizininiz, geri alınan commit'in tam haliyle eşleşir. Bu nedenle, bu modda çalışırken dikkatli olmanız gerekiyor.
+
+Özetle, git reset komutu Git'in güçlü araçlarından biridir ve projenizde geri alma işlemleri yapmak için kullanılabilir. Ancak, tüm değişikliklerinizi kaybetmek istemiyorsanız, doğru parametreyi seçtiğinizden emin olmalısınız.
+
+
+Dikkatli olunması gerektiği için git reset --hard komutunu ele alacağız:
+
+Revert işleminde yaptıklarımızın aynısını yapıyoruz. git log komutu ile commitlerimizi kontrol ediyoruz. Buradakilerin tamamı örnektir. Commit oluşturma ve log adımlarını önceki sayfalarda öğrenmiştik.
+
+
+örnek olarak bir adet klasör ve iki adet dosya oluşturalım ve git klasörünü commitleyelim
+
+
+commit işleminden sonra git log ile kontrol edelim
+
+
+dosya oluşturuldu isimli commiti geri almak istiyoruz. Bunun sonucunda dosya klasörden silinsin ve resetleyeceğimiz log listeden silinsin.
+
+
+git log komutunu çalıştırdıktan sonra "dosya oluşturuldu" isimli commitin silindiğini görüyoruz.
+
+
+Klasöre geri döndüğümüzde reset işlemini yaptığımız dosyanın silindiğini görüyoruz. Böylelikle reset işlemini bitirmiş oluyoruz.
+
+
+Böylelikle git reset işlemini tamamlamış oluyoruz.
+
+
+	
+GitHub
+GitHub Nedir ?
+
+GitHub, yazılım geliştiricilerin kodlarını saklamak, paylaşmak ve işbirliği yapmak için kullandıkları popüler bir sürüm kontrol platformudur. Projelerin değişikliklerini izlemek ve yönetmek için kullanılır. Aynı zamanda açık kaynak projelerin geliştirilmesine olanak sağlar. 
+
+GitHub Profiliniz
+
+
+GitHub profiliniz, dijital kimliğiniz ve yazılım geliştirme yeteneklerinizi sergileyebileceğiniz bir platformdur. Profiliniz, projelerinizi, katkıda bulunduğunuz açık kaynak projeleri ve kişisel bilgilerinizi içerebilir. GitHub profilinizdeki projeler, diğer geliştiricilerin ilgisini çekebilir ve işverenler veya işbirliği yapmak isteyen kişiler tarafından fark edilebilir. Ayrıca profilinizdeki etkinlikler, paylaştığınız kodları ve projelerdeki katkıları göstererek tecrübenizi ve işbirliği becerilerinizi kanıtlar. İyi bir GitHub profilinin, yazılım geliştirme topluluğunda tanınmanıza, yeni fırsatlar elde etmenize ve işbirliği yapabileceğiniz kişilerle bağlantı kurmanıza yardımcı olabileceği unutulmamalıdır. 
+
+GitHub Explore
+
+
+GitHub Explore, GitHub platformunda keşif yapmak ve ilginizi çekebilecek projeleri, toplulukları ve kullanıcıları bulmak için kullanılan bir özelliktir. GitHub'ın sağladığı bir dizi arama ve filtreleme seçeneğiyle keşfetmek istediğiniz konuları veya projeleri kolayca bulabilirsiniz. 
+
+GitHub Explore, açık kaynak projelerden trendlere, popüler repolardan geliştirici profillerine kadar geniş bir yelpazede içeriği sunar. Yenilikçi projeleri, ilham verici kod tabanlarını ve yeni teknolojileri keşfetmek için ideal bir araçtır. 
+
+
+Bu özellik sayesinde, farklı programlama dilleri, konular veya kategoriye göre filtreleme yapabilir ve ilgi alanlarınıza uygun projeleri bulabilirsiniz. Ayrıca, diğer geliştiricilerin paylaşımlarını inceleyerek topluluk içindeki etkinlikleri takip edebilir ve ilgilendiğiniz projelere katkıda bulunabilirsiniz.  
+
+GitHub'da repository açmak
+
+GitHub'da bir depo (repository) oluşturmak, projelerinizi yönetmek, kodlarınızı paylaşmak ve işbirliği yapmak için önemli bir adımdır. Depo oluşturma işlemi oldukça basit ve hızlıdır.
+
+İlk adım olarak, GitHub web sitesine gidin ve hesabınıza giriş yapın. Ardından, sol üst köşedeki yeşil "New" simgesine tıklayın.
+
+
+Repository Name (Depo Adı): Depo için bir isim belirleyin. İsim, projenizin neyle ilgili olduğunu ve neyi içerdiğini anlatmalıdır.
+
+
+Description (Açıklama): Projenizin kısa bir açıklamasını ekleyin. Bu, diğer geliştiricilerin projenizi daha iyi anlamalarına yardımcı olur.
+
+
+Public/Private (Halka açık/Özel): Depoyu halka açık mı yoksa özel mi yapmak istediğinizi seçin. Halka açık depolar herkese görünür ve katkıda bulunulabilirken, özel depolar sadece sizin veya belirli bir ekip üyelerinin erişebileceği şekilde olur.
+
+
+Initialize this repository with a README (Bu depoyu README dosyasıyla başlat): Bu seçeneği işaretlerseniz, depo ile birlikte otomatik olarak bir README dosyası oluşturulur. README, projenizin açıklamasını, kurulum talimatlarını, kullanım kılavuzunu vb. içerebilir.
+
+
+Add .gitignore: Bu seçeneği kullanarak, projenizdeki belirli dosyaların veya dizinlerin Git tarafından izlenmemesini sağlayabilirsiniz. Örneğin, derleme dosyalarını veya gizli verileri .gitignore dosyasıyla belirtebilirsiniz.
+
+
+Choose a license (Lisans seçin): Projenize bir lisans ekleyebilirsiniz. Lisans, projenizin kullanım koşullarını belirtir ve diğer geliştiricilerin projenizi kullanmalarını düzenler.
+
+
+Bu bilgileri doldurduktan sonra, "Create repository" (Depo oluştur) düğmesine tıklayarak depoyu oluşturabilirsiniz.
+
+Depo oluşturulduktan sonra, Git komutlarını kullanarak kodlarınızı depoya ekleyebilir veya doğrudan GitHub arayüzünden dosyaları yükleyebiliriz.
+
+	Repository Komutları
+Git Push
+
+"Git push", yerelde yaptığınız değişiklikleri remote repository'e göndermek için kullanılan bir Git komutudur. Bu komutu kullanarak, yerelde yaptığınız commit'leri remote repository'ye yükleyebilirsiniz. Diğer ekip üyeleri bu değişiklikleri görüntüleyebilir, değerlendirebilir ve projeye katkıda bulunabili 
+
+
+Git Pull
+
+"Git pull", remote repository'deki değişiklikleri yerel depoya çekmek için kullanılan bir Git komutudur. Yani, başkalarının yaptığı güncellemeleri alarak yerel projenizi güncel tutabilirsiniz. Git pull komutu, "git fetch" ve "git merge" komutlarını birleştirir. Fetch işlemi ile remote repository'deki değişiklikler yerel depoya getirilir, ardından merge işlemi ile bu değişiklikler yerel projenize entegre edilir. 
+
+
+Git Fetch
+
+"Git fetch", remote repository'deki değişiklikleri yerel depoya getirmek için kullanılan bir Git komutudur. Ancak, fetch komutu, yerel projenizdeki değişiklikleri otomatik olarak birleştirmez. Yani, yereldeki projenizde herhangi bir değişiklik yapmadan önce, remote repository'deki değişiklikleri önce "git fetch" komutu ile getirir ve ardından bu değişiklikleri yerel projenize birleştirme işlemini yapabilirsiniz. 
+
+
+Git Clone
+
+"Clone", bir remote repository'nin tam bir kopyasını yerel bir bilgisayara almak için kullanılan bir Git komutudur. Clone işlemi, bir projeyi başlatmak veya mevcut bir projeyi yerelde çalışmak için kullanışlıdır. Clone işlemi ile remote repository'nin tüm geçmişi, dosyaları ve dalları yerel depoya indirilir. Bu sayede projeyi yerelde düzenleyebilir, değişiklikleri yapabilir ve ardından push ve pull gibi komutlarla remote repository ile senkronize edebilirsiniz 
+
+
+Git Fork
+
+"Fork", bir projenin kopyasını oluşturmak için kullanılan bir işlemdir. Özellikle açık kaynak projelerde yaygın olarak kullanılır. Bir projeyi fork ettiğinizde, projenin tam bir kopyasını kendi GitHub hesabınıza alırsınız. Bu sayede projeyi değiştirebilir, yeni özellikler ekleyebilir ve bunları remote repository'ye geri gönderebilirsiniz. Fork işlemi, projeye katkıda bulunma imkanı sağlar ve orijinal projenin etkilenmeden kalmasını sağlar. 
+
+
+Projeyi fork etmek için, GitHub sayfasında sağ üst köşede bulunan "Fork" düğmesine tıklayın. Bu, projenin tam bir kopyasını kendi GitHub hesabınıza almanızı sağlar.
+
+
+Fork işlemi tamamlandıktan sonra, fork ettiğiniz projenin GitHub deposu artık sizin GitHub hesabınızda bulunur. Bu depoyu yerel bilgisayarınıza klonlamak için aşağıdaki komutu kullanabilirsiniz:
+
+
+Artık fork edilen projeyi yerelde düzenleyebilirsiniz. Değişiklikler yapabilir, yeni özellikler ekleyebilir veya hataları düzeltebilirsiniz.
